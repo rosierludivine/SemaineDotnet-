@@ -6,11 +6,11 @@ Installation de Donet
 Voici le liens https://dotnet.microsoft.com/en-us/download/dotnet/8.0
 
 Verification de l'installation 
-
+```C#
 dotnet --version // verifier la version 
 
 dotnet --list-sdks // liste des SDK installé 
-
+``````
 ## Cours 
 
 .Net est un framwork mais pas que il est crossplateform  et open source concu par microsoft 
@@ -25,6 +25,7 @@ Dotnet core = crossplateforme
 
 Controlleur toute la logique de notre site 
 
+```C#
 model metier= Ces exemple la classe d'un objet 
 
 View se qui voit sur le site va chercher ce qui doit être afficher 
@@ -36,8 +37,10 @@ dotnet new console --use-program-main -o consoleProjet
 allez dans le dossier consoleProjet 
 
 dotnet run 
+``````
 
 ### Les fichier 
+
 csproj = ont dirais du xml 
 git ignore bind et obj. 
 
@@ -46,13 +49,16 @@ installller un package 2 maniere .Net CLI ou PackageReference
 Préférence avec le .Net CLI 
 
 ### créer un projet MVC 
+```c#
 dotnet new list | grep mvc
+``````
 avec le packages applications web ASP.NET CORE (MVC)
 
 
 #### créer un projet MVC 
+```C#
 dotnet new mvc -o MVC 
-
+``````
 ##### Fichier MVC 
 
 Le fichier sln: 
@@ -76,7 +82,7 @@ Toute les assets a static doivent être placer dans wwwroot,
     ### Commment apporter des fonctionnalités
 
     dans le main 
-
+```C#
     var maList = new List<objet>{1,2,3,4,5,6,7,8,9};
 
     stocker la sum 
@@ -84,19 +90,22 @@ Toute les assets a static doivent être placer dans wwwroot,
 
     Injecter des variables dans une chaine de caractères 
     Console.WriteLine($"Somme = {somme}" )
-
+``````
 
 Nous pouvons aussi  avoir des fonctions Asynchrone quand nous avons pas de reponse de suite Api. 
+  ```C#
     public static async Task Main(){
         await DoSomethingAsync();
     }
+```
 
 Initiamiser une variable a null 
 Attention: 
 En C# nous ne pouvons pas avoir une assigne une valeur a null 
 
-
+```C#
 String? test = null; 
+```
 
 la valeur test peut avoir la valeur string ou null 
 
@@ -109,9 +118,11 @@ schéma de l'api
 
 #### creation d'un projet API 
 
+```.NET
 dotnet new webapi -o BookStoreNoControllers //cree une mini api web sans controller 
 
 dotnet new webapi --use-controllers --use-program-main -o 
+``````
 
 csproj est egale au fichier json 
 
@@ -121,9 +132,10 @@ Pour faire appel au constructeur par defaut de l'héritage il faut ecrire :base 
 
 Lors d'une modification il fait plutot arreter le CLI faire un build puis relancer.
 
+```
 dotnet build 
 dotnet run 
-
+```
 
 ### Création d'un controleur en API 
 
@@ -141,9 +153,22 @@ myBook.Author = "F.Scott Fitzgerland";
 
 
 **Les champs non pas d'accesseurs de getteurs et de setteurs.**
+```C#
 un champs : 
 public int NbPages; 
-
+```
 
 La méthode OK permet de return du code un objet Book par exemple 
+
+```C#
 return OK(books); //Voir la code du prof 
+```
+
+### Les erreurs a éviter 
+
+erreur 400:  bad request 
+La structure de l'objet ne revoit pas ce que nous attendons 
+exemple nous devons avoir un livre mais nous nous envoyer du pain
+
+this en orientation objet:
+

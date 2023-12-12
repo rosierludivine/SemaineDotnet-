@@ -1,6 +1,10 @@
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using BookStoreAPI.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace BookStoreAPI.Controllers; //mettre le chemin de juste au dossier qui contient le fichier 
 
@@ -14,6 +18,13 @@ namespace BookStoreAPI.Controllers; //mettre le chemin de juste au dossier qui c
 [Route("api/[controller]")]//permet de ne plus mettre [HttpPost[books]]
 public class BookController : ControllerBase  //Heritage de ControllerBase afin de completer les valeurs en doublons dans les tables
 {
+    private readonly ApplicationDbContext _dbContext;
+
+    public BookController(ApplicationDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
     [HttpGet]
     public ActionResult<List<Book>> GetBooks()
     {
@@ -26,11 +37,32 @@ public class BookController : ControllerBase  //Heritage de ControllerBase afin 
         return Ok(books);
 
     }
+    //Creer une methode avec la methode post 
+    [HttpPost]
+    [ProducesResponseType(201, Type = typeof(Book))]
+    [ProducesResponseType(400)]
+    public async Task<ActionResult<Book>> PostBook([FromBody] Book book)
+    {
+        // we check if the parameter is null
+        if (book == null)
+        {
+            return BadRequest();
+        }
+        // we check if the book already exists
+        Book? addedBook = await _dbContext.Books.FirstOrDefaultAsync(b => b.Title == book.Title);
+        if (addedBook != null)
+        {
+            return BadRequest("Book already exists");
+        }
+        else
+        {
+            // we add the book to the database
+            await _dbContext.Books.AddAsync(book);
+            await _dbContext.SaveChangesAsync();
 
-//Creer une methode avec la methode post
-[HttpPost]
-    public CreateBook ([FromBody] Book book){//[FromBody] permet de dire ou la requete http est dans le corps
-        Console.WriteLine(book.Title); 
-        return CreatAtAction(nameof(GetBooks), new {id = book.Id}, book)
+            // we return the book
+            return Created("api/book", book);
+
+        }
     }
 }

@@ -1,18 +1,24 @@
 
+using BookStoreAPI.Entities;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
 namespace BookStoreAPI;
 
 public class Program
 {
     public static void Main(string[] args)
     {
-        var builder = WebApplication.CreateBuilder(args);// aide a mettre en place votre serveur 
+        var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container. Container application qui gere les requetes http entrante et sortante 
+        // Add services to the container.
+        builder.Services.AddDbContext<ApplicationDbContext>();
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        builder.Services.AddEndpointsApiExplorer();// Analyser le code
-        builder.Services.AddSwaggerGen();// genérer le code 
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
 
         var app = builder.Build();
 

@@ -39,7 +39,7 @@ public class BookController : ControllerBase  //Heritage de ControllerBase afin 
     }
     //Creer une methode avec la methode post 
     [HttpPost]
-    [ProducesResponseType(201, Type = typeof(Book))]
+    [ProducesResponseType(201, Type = typeof(Book))]// permet de controler que ce soit bien un objet Book 
     [ProducesResponseType(400)]
     public async Task<ActionResult<Book>> PostBook([FromBody] Book book)
     {
@@ -65,4 +65,35 @@ public class BookController : ControllerBase  //Heritage de ControllerBase afin 
 
         }
     }
+
+    //Put
+    [HttpPut("id")]
+    [ProducesResponseType(201, Type = typeof(Book))]// permet de controler que ce soit bien un objet Book 
+    [ProducesResponseType(400)]
+    public async Task<IActionResult> PutTodoItem(long id, Book book)
+    {
+     // we check if the parameter is null
+        if (book == null)
+        {
+            return BadRequest();
+        }
+        // we check if the book already exists
+        Book? addedBook = await _dbContext.Books.FirstOrDefaultAsync(b => b.Title == book.Title);
+        if (addedBook != null)
+        {
+            return BadRequest("Book already exists");
+        }
+        else
+        {
+            // we add the book to the database
+            await _dbContext.Books.AddAsync(book);
+            await _dbContext.SaveChangesAsync();
+
+            // we return the book
+            return Created("api/book", book);
+
+        }
+}
+        
+
 }

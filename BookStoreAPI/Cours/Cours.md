@@ -37,7 +37,7 @@ dotnet new console --use-program-main -o controleDotnet
 allez dans le dossier consoleProjet 
 
 dotnet run 
-``````
+```
 
 ### Les fichier 
 
@@ -51,14 +51,14 @@ Préférence avec le .Net CLI
 ### créer un projet MVC 
 ```c#
 dotnet new list | grep mvc
-``````
+```
 avec le packages applications web ASP.NET CORE (MVC)
 
 
 #### créer un projet MVC 
 ```C#
 dotnet new mvc -o MVC 
-``````
+```
 ##### Fichier MVC 
 
 Le fichier sln: 
@@ -82,6 +82,7 @@ Toute les assets a static doivent être placer dans wwwroot,
     ### Commment apporter des fonctionnalités
 
     dans le main 
+
 ```C#
     var maList = new List<objet>{1,2,3,4,5,6,7,8,9};
 
@@ -90,7 +91,7 @@ Toute les assets a static doivent être placer dans wwwroot,
 
     Injecter des variables dans une chaine de caractères 
     Console.WriteLine($"Somme = {somme}" )
-``````
+```
 
 Nous pouvons aussi  avoir des fonctions Asynchrone quand nous avons pas de reponse de suite Api. 
   ```C#
@@ -109,7 +110,7 @@ String? test = null;
 
 la valeur test peut avoir la valeur string ou null 
 
-API: 
+**API:** 
 
 schéma de l'api
 
@@ -303,3 +304,29 @@ userDbContext  // couche user application
 
 pour proteger une route il faut mettre [Authorize] au dessus de la route 
 pas besoin d'autorisaton 
+
+#### Rendu de la Semaine 
+
+Développez une API REST avec .NET 8.0 qui permet de gérer une bibliothèque de livres ou une boutique en ligne de livres.
+
+Decrivez votre API avec OpenAPI (Swagger) et un readme.md.
+Decrivez les fonctionnalités de votre API avec des schemas. (UML par exemple) et un readme.md. (Diagramme de classe, diagramme de séquence, diagramme d'activité, diagramme de cas d'utilisation, etc.)
+
+Vous mettrez en place l'authentification et l'autorisation avec asp .net core Identity.
+
+Vous mettrez en place la validation de données avec ModelState.
+
+Vous utiliserez les DTO et AutoMapper.
+
+Vous utiliserez Entity Framework Core pour accéder à une base de données SQLite.
+
+Vous utiliserez les migrations pour créer la base de données.
+
+Vous utiliserez les controllers pour gérer les requêtes HTTP.
+
+
+### Creation d'u jWT 
+dotnet user-jwts create
+  
+  Pour migrate plus précisement faire 
+  dotnet ef database update --context le nom de la db 

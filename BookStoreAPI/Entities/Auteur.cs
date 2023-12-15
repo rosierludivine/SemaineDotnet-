@@ -1,6 +1,6 @@
 namespace BookStoreAPI.Entities
 {
-    public class Livre
+    public class Auteur
     {
 
 
@@ -8,7 +8,11 @@ namespace BookStoreAPI.Entities
         // ceci est une property
         public int Id { get; set; }
         public required string Name { get; init; }
-        public int Annee { get; set; }
+        public string? firstName { get; set; }
+        
+        public int Age { get; set; }
+
+
 
     }
 }

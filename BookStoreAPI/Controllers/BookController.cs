@@ -40,11 +40,12 @@ public class BookController : ControllerBase  //Heritage de ControllerBase afin 
         foreach (var book in books ){   
             booksDto.Add(_mapper.Map<BookDto>(book));
         }
-        
-
+    
         return Ok(booksDto);
 
     }
+    
+    
     //Creer une methode avec la methode post 
     [HttpPost]
     [ProducesResponseType(201, Type = typeof(Book))]// permet de controler que ce soit bien un objet Book 
@@ -52,25 +53,25 @@ public class BookController : ControllerBase  //Heritage de ControllerBase afin 
     public async Task<ActionResult<Book>> PostBook([FromBody] Book book)
     {
 
-        // we check if the parameter is null
+        // On regarde si ce qui est rentré n'est pas null 
         if (book == null)
         {
-            return BadRequest();
+            return BadRequest("Vous n'avez pas remplis les valeur");
         }
-        // we check if the book already exists
+        // on regarde si le livre existe déjà 
         Book? addedBook = await _dbContext.Books.FirstOrDefaultAsync(b => b.Title == book.Title);
         
         if (addedBook != null)
         {
-            return BadRequest($"Book already exists ModelState ") ;
+            return BadRequest($"Le Book existe déjà !!! ") ;
         }
         else
         {
-            // we add the book to the database
+            //On ajoute le livre a la base de données 
             await _dbContext.Books.AddAsync(book);
             await _dbContext.SaveChangesAsync();
 
-            // we return the book
+            // on affiche le livre 
             return Created("api/book", book);
 
         }

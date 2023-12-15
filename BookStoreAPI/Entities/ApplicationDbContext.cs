@@ -28,8 +28,8 @@ public class ApplicationDbContext : DbContext
 
 
     // DbSet est une classe générique, chaque Dbset correspond à une table dans la base de données
-    public DbSet<Book> Books { get; set; } = default!;
+    public DbSet<Book> Books { get; set; } 
 
-    //DbSet de Livre 
-    public DbSet<Livre> Auteurs {get; set;}
+    //DbSet de Auteur 
+    public DbSet<Auteur> Auteurs {get; set;}
 }

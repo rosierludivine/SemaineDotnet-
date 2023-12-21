@@ -25,6 +25,7 @@ public class AuteurController: ControllerBase {
         _mapper = mapper;
     }
 
+
     [HttpGet]
     public async Task<ActionResult<List<AuteurDto>>> GetAuteur()
     {

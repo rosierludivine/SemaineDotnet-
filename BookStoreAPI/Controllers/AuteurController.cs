@@ -40,35 +40,25 @@ public class AuteurController: ControllerBase {
 
     }
 
-    [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)] //erreur 201 
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<List<Auteur>>> PostAuteur([FromBody] Auteur auteur)
+    [HttpPost("auteur")]
+public async Task<ActionResult<Auteur>> PostAuthor([FromBody] AuteurDto auteurDto)
+{
+    if (!ModelState.IsValid)
     {
-
-        // On regarde si ce qui est rentré n'est pas null 
-        if (auteur == null)
-        {
-            return BadRequest("");
-        }
-        // on regarde si l'auteur existe déjà 
-        Auteur? addAuteur = await _dbContext.Auteurs.FirstOrDefaultAsync(a => a.Name == auteur.Name);
-        
-        if (addAuteur != null)
-        {
-            return BadRequest($"L'auteur existe déjà !!! ") ;
-        }
-        else
-        {
-            //On ajoute l'auteur  a la base de données 
-            await _dbContext.Auteurs.AddAsync(auteur);
-            await _dbContext.SaveChangesAsync();
-
-            // on affiche l'auteur  
-            return Created("api/book", auteur);
-
-        }
+        return BadRequest(ModelState);
     }
-    
 
-} 
+    var auteur = _mapper.Map<Auteur>(auteurDto);
+
+    if (auteur == null)
+    {
+        return BadRequest();
+    }
+
+    _dbContext.Auteurs.Add(auteur);
+    await _dbContext.SaveChangesAsync();
+
+    return CreatedAtAction(nameof(GetAuteur), new { id = auteur.Id }, auteurDto);
+}}

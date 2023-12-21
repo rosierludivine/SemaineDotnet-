@@ -32,4 +32,6 @@ public class ApplicationDbContext : DbContext
 
     //DbSet de Auteur 
     public DbSet<Auteur> Auteurs {get; set;}
+
+    public DbSet<UserDbContext> User {get; set;}
 }

@@ -43,7 +43,7 @@ public class AuteurController: ControllerBase {
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)] //erreur 201 
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<List<Auteur>>> PostAuteur(Auteur auteur)
+    public async Task<ActionResult<List<Auteur>>> PostAuteur([FromBody] Auteur auteur)
     {
 
         // On regarde si ce qui est rentré n'est pas null 
@@ -51,20 +51,20 @@ public class AuteurController: ControllerBase {
         {
             return BadRequest("");
         }
-        // on regarde si le livre existe déjà 
+        // on regarde si l'auteur existe déjà 
         Auteur? addAuteur = await _dbContext.Auteurs.FirstOrDefaultAsync(a => a.Name == auteur.Name);
         
         if (addAuteur != null)
         {
-            return BadRequest($"Le Book existe déjà !!! ") ;
+            return BadRequest($"L'auteur existe déjà !!! ") ;
         }
         else
         {
-            //On ajoute le livre a la base de données 
+            //On ajoute l'auteur  a la base de données 
             await _dbContext.Auteurs.AddAsync(auteur);
             await _dbContext.SaveChangesAsync();
 
-            // on affiche le livre 
+            // on affiche l'auteur  
             return Created("api/book", auteur);
 
         }
